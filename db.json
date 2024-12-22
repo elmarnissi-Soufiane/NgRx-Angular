@@ -1,0 +1,44 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "name": "Smartphone X",
+      "price": 699.99,
+      "quantity": 25,
+      "selected": false,
+      "available": false
+    },
+    {
+      "id": "6",
+      "name": "Smartwatch Pro",
+      "price": 299.99,
+      "quantity": 185,
+      "selected": true,
+      "available": false
+    },
+    {
+      "id": "8",
+      "name": "External Hard Drive",
+      "price": 79.99,
+      "quantity": 2121,
+      "selected": false,
+      "available": true
+    },
+    {
+      "id": "9",
+      "name": "4K Monitor",
+      "price": 399.99,
+      "quantity": 207898,
+      "selected": false,
+      "available": false
+    },
+    {
+      "id": "9168",
+      "name": "dkdkl",
+      "price": 45,
+      "quantity": 6546,
+      "selected": true,
+      "available": true
+    }
+  ]
+}
