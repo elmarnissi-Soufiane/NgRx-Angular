@@ -39,7 +39,7 @@ export class ProductNavbarComponent implements OnInit {
     this.store.dispatch(new NewProductAction({}));
   }
 
-  onSerach(keyword: any) {
-    this.store.dispatch(new SerearchProductAction({}));
+  onSerach(dataForm: any) {
+    this.store.dispatch(new SerearchProductAction(dataForm.keyword));
   }
 }

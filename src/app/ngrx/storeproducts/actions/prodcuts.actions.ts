@@ -99,7 +99,7 @@ export class GetAvailableProductsActionError implements Action {
 
 export class SerearchProductAction implements Action {
   type: ProductActionsTypes = ProductActionsTypes.SEARCH_PRODUCTS;
-  constructor(public payload: any) {}
+  constructor(public payload: string) {}
 }
 
 export class SerearchProductActionSuccess implements Action {

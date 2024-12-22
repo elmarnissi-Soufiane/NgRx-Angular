@@ -25,10 +25,13 @@ export class ProductsService {
   // Methode search
   searchProduts(keyword: string): Observable<Product[]> {
     //let host = environment.host;
-    let validHost = 'http://localhost:3000';
-    let failedHots = 'http://localhost:8000';
-    let host = Math.random() > 0.2 ? validHost : failedHots;
+    let host = 'http://localhost:3000';
+    // let validHost = 'http://localhost:3000';
+    // let failedHots = 'http://localhost:8000';
+    // let host = Math.random() > 0.2 ? validHost : failedHots;
     return this.http.get<Product[]>(host + '/products?name=' + keyword);
+    // console.log('search', sr);
+    // return sr;
   }
 
   // delete Produt
@@ -56,7 +59,7 @@ export class ProductsService {
 
   ////////////////
 
-  // get Sekected
+  // get Selected
   getSelectedProducts(): Observable<Product[]> {
     //let host = environment.host;
     let validHost = 'http://localhost:3000';
