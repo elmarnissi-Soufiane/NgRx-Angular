@@ -11,10 +11,11 @@ export class ProductsService {
 
   // recupere une listes des produits
   getAllProducts(): Observable<Product[]> {
-    //let host = 'http://localhost:3000';
-    let validHost = 'http://localhost:3000';
-    let failedHots = 'http://localhost:3008';
-    let host = Math.random() > 0.2 ? validHost : failedHots;
+    let host = 'http://localhost:3000';
+    // let validHost = 'http://localhost:3000';
+    // let failedHots = 'http://localhost:3008';
+
+    //let host = Math.random() > 0.2 ? validHost : failedHots;
     //let host = environment.host;
     console.log(host);
     let data = this.http.get<Product[]>(host + '/products');

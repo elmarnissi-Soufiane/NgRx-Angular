@@ -1,2 +1,23 @@
-<app-product-navbar (productEventEmitter)="onActionEvent($event)"></app-product-navbar>
-<app-product-list [productsInputs$]="products$" (productsListEventEmitter)="onActionEvent($event)"></app-product-list>
+<!-- <app-product-navbar (productEventEmitter)="onActionEvent($event)"></app-product-navbar> -->
+<!-- <app-product-list [productsInputs$]="products$" (productsListEventEmitter)="onActionEvent($event)"></app-product-list> -->
+
+<div class="p-4">
+  <app-product-navbar></app-product-navbar>
+  <ng-container
+    *ngIf="prodcutsState$ | async as state"
+    [ngSwitch]="state.dataState"
+  >
+    <ng-container *ngSwitchCase="ProductStateEnum.INITIAL">
+      <div class="p-2">Initial State</div>
+    </ng-container>
+    <ng-container *ngSwitchCase="ProductStateEnum.LOADING">
+      <div class="p-2">Loading...</div>
+    </ng-container>
+    <ng-container *ngSwitchCase="ProductStateEnum.ERROR">
+      <div class="p-2 text-danger">{{ state.errorMessage }}</div>
+    </ng-container>
+    <ng-container *ngSwitchCase="ProductStateEnum.LOADED" class="p-4">
+      <app-product-list [state]="state"></app-product-list>
+    </ng-container>
+  </ng-container>
+</div>

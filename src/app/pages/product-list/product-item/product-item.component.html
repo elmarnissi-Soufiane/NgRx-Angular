@@ -1,30 +1,8 @@
 <tr *ngIf="product">
-    <td>{{ product.id }}</td>
-    <td>{{ product.name }}</td>
-    <td>{{ product.price }}</td>
-    <td>{{ product.quantity }}</td>
-    <td>{{ product.selected ? "Yes" : "No" }}</td>
-    <td>{{ product.available ? "Yes" : "No" }}</td>
-    <td>
-        <button (click)="onSelectProduct(product)" [ngClass]="product.selected ? 'btn-succes' : 'btn-danger'" class="btn btn-sm btn-success">
-      <span *ngIf="product.selected">Unselect</span>
-      <span *ngIf="!product.selected">Select</span>
-    </button>
-    </td>
-    <td>
-        <button (click)="onAvaliableProduct(product)" [ngClass]="product.available ? 'btn-succes' : 'btn-danger'" class="btn btn-sm btn-success">
-      <span *ngIf="product.available">Unavaliable</span>
-      <span *ngIf="!product.available">Avaliable</span>
-    </button>
-    </td>
-    <td>
-        <button class="btn btn-danger" (click)="onDeleteProduct(product)">
-      <span class="fa fa-trash-o"></span>
-    </button>
-    </td>
-    <td>
-        <button class="btn btn-info" (click)="onUpdateProduct(product)">
-      <span class="fa fa-edit"></span>
-    </button>
-    </td>
+  <td>{{ product.id }}</td>
+  <td>{{ product.name }}</td>
+  <td>{{ product.price }}</td>
+  <td>{{ product.quantity }}</td>
+  <td>{{ product.selected }}</td>
+  <td>{{ product.available }}</td>
 </tr>

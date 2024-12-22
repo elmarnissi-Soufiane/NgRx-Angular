@@ -1,28 +1,20 @@
-<div class="container">
-    <ng-container *ngIf="productsInputs$ | async as products">
-        <div *ngIf="products.dataState === DataStateEnum.LOADIN">Loading...</div>
-
-        <ng-container *ngIf="products.dataState === DataStateEnum.LOADED">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Identity</th>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Selected</th>
-                        <th>Available</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <app-product-item style="display: contents" [product]="product" *ngFor="let product of products.data" (eventEmitterItemProductList)="onActionEvent($event)"></app-product-item>
-                </tbody>
-            </table>
-        </ng-container>
-
-        <div *ngIf="products.dataState === DataStateEnum.ERROR" class="alert alert-danger">
-            {{ products.errorMessage }}
-        </div>
-    </ng-container>
-</div>
+<table class="table" *ngIf="state">
+  <thead>
+    <tr>
+      <th>Identity</th>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Selected</th>
+      <th>Available</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <app-product-item
+      style="display: contents"
+      *ngFor="let product of state.products"
+      [product]="product"
+    ></app-product-item>
+  </tbody>
+</table>
