@@ -9,6 +9,7 @@ import {
   NewProductAction,
   SerearchProductAction,
 } from '../../../ngrx/storeproducts/actions/prodcuts.actions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-navbar',
@@ -18,7 +19,7 @@ import {
   styleUrl: './product-navbar.component.css',
 })
 export class ProductNavbarComponent implements OnInit {
-  constructor(private store: Store<any>) {}
+  constructor(private store: Store<any>, private router: Router) {}
 
   ngOnInit(): void {}
 
@@ -36,7 +37,7 @@ export class ProductNavbarComponent implements OnInit {
   }
 
   onNewProduct() {
-    this.store.dispatch(new NewProductAction({}));
+    this.router.navigateByUrl('/newProduct');
   }
 
   onSerach(dataForm: any) {

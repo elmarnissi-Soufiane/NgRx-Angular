@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProductsService } from '../../services/products.service';
+
 import {
   FormBuilder,
   FormGroup,
@@ -8,7 +8,16 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import {
+  NewProductAction,
+  SaveProductAction,
+} from '../../ngrx/storeproducts/actions/prodcuts.actions';
 import { Product } from '../../models/product';
+import {
+  ProductsState,
+  ProductStateEnum,
+} from '../../ngrx/storeproducts/reducers/products.reducers';
 
 @Component({
   selector: 'app-product-form',
@@ -19,38 +28,39 @@ import { Product } from '../../models/product';
 })
 export class ProductFormComponent implements OnInit {
   // pour les validators
-  prodcutFormGroup = this._formGroup.group({
-    name: ['', Validators.required],
-    price: [0, Validators.required],
-    quantity: [0, Validators.required],
-    selected: [true, Validators.required],
-    available: [true, Validators.required],
-  });
+  productFormGroup: FormGroup | null = null;
 
   // pour verfies le fields
   submitted: boolean = false;
+  state: ProductsState | null = null;
+  readonly ProductStateEnum = ProductStateEnum;
 
-  constructor(
-    private _formGroup: FormBuilder,
-    private productsService: ProductsService
-  ) {}
+  constructor(private _formGroup: FormBuilder, private store: Store<any>) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.store.dispatch(new NewProductAction({}));
+    this.store.subscribe((state) => {
+      this.state = state.catalogueState;
+
+      if (this.state?.dataState == ProductStateEnum.NEW) {
+        this.productFormGroup = this._formGroup.group({
+          name: ['', Validators.required],
+          price: [0, Validators.required],
+          quantity: [0, Validators.required],
+          selected: [true, Validators.required],
+          available: [true, Validators.required],
+        });
+      }
+    });
+  }
+
+  newProduct() {
+    this.store.dispatch(new NewProductAction({}));
+  }
 
   // ajouter
   onSaveProduct() {
-    this.submitted = true;
-    if (this.prodcutFormGroup.invalid) return;
-    let save = this.productsService.saveProduct(
-      this.prodcutFormGroup.value as Product
-    );
-    save.subscribe({
-      next: (savedProduct) => {
-        console.log('Produit sauvegardé avec succès :', savedProduct);
-      },
-      error: (err) => {
-        console.error('Erreur lors de la sauvegarde du produit :', err);
-      },
-    });
+    //this.submitted = true;
+    this.store.dispatch(new SaveProductAction(this.productFormGroup?.value));
   }
 }

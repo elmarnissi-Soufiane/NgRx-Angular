@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Product } from '../models/product';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -35,9 +35,15 @@ export class ProductsService {
   }
 
   // delete Produt
+
   deleteProdcuts(product: Product): Observable<void> {
-    let host = 'http://localhost:3000';
-    return this.http.delete<void>(host + '/products/' + product.id);
+    const host = 'http://localhost:3000';
+    return this.http.delete<void>(`${host}/products/${product.id}`).pipe(
+      catchError((error) => {
+        console.error('Error deleting product:', error);
+        return throwError(() => new Error('Unable to delete product'));
+      })
+    );
   }
 
   // save Product Ajouter
@@ -69,16 +75,21 @@ export class ProductsService {
   }
 
   // onSelectProduct
+
   onSelectProduct(product: Product): Observable<Product> {
-    console.log('Prodcut selected service', product);
-    let host = 'http://localhost:3000';
-    // let failedHots = 'http://localhost:8000';
-    // let host = Math.random() > 0.2 ? validHost : failedHots;
+    console.log('Product selected service', product);
 
-    // si eagala true prend false si non true
-    product.selected = !product.selected;
+    const host = 'http://localhost:3000'; // Utilisez environment.apiUrl en production.
+    const updatedProduct = { ...product, selected: !product.selected }; // Crée une copie et modifie "selected".
 
-    return this.http.put<Product>(host + '/products/' + product.id, product);
+    return this.http
+      .put<Product>(`${host}/products/${updatedProduct.id}`, updatedProduct)
+      .pipe(
+        catchError((error) => {
+          console.error('Error updating product:', error);
+          return throwError(() => new Error('Unable to update product'));
+        })
+      );
   }
 
   // get available
@@ -89,10 +100,24 @@ export class ProductsService {
   }
 
   // select avaiblable Prudt
+
   onAvailableProduct(product: Product): Observable<Product> {
-    console.log('available product service', product);
-    let host = 'http://localhost:3000';
-    product.available = !product.available;
-    return this.http.put<Product>(host + '/products/' + product.id, product);
+    console.log('Available product service', product);
+
+    const host = 'http://localhost:3000'; // Recommandé : Utilisez des fichiers d'environnement pour stocker les URL.
+
+    // Créer une copie du produit pour éviter de modifier un objet immuable
+    const updatedProduct = { ...product, available: !product.available };
+
+    return this.http
+      .put<Product>(host + '/products/' + updatedProduct.id, updatedProduct)
+      .pipe(
+        catchError((error) => {
+          console.error('Error updating available status:', error);
+          return throwError(
+            () => new Error('Unable to update availability status')
+          );
+        })
+      );
   }
 }

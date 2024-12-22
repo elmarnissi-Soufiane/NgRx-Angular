@@ -1,6 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Product } from '../../../models/product';
 import { CommonModule } from '@angular/common';
+import { Store } from '@ngrx/store';
+import {
+  AvaliableSelectedProductAction,
+  DeleteProductAction,
+  SelectedProductAction,
+  UpdateProductAction,
+} from '../../../ngrx/storeproducts/actions/prodcuts.actions';
 
 @Component({
   selector: 'app-product-item',
@@ -13,34 +20,28 @@ export class ProductItemComponent implements OnInit {
   // Product
   @Input() product: Product | null = null;
 
-  constructor() {}
+  constructor(private store: Store) {}
   ngOnInit(): void {}
 
   onSelectProduct(product: Product) {
-    // this.eventEmitterItemProductList.emit({
-    //   type: ProductActionsTypes.SELECTED_PRODUCT,
-    //   payload: product,
-    // });
+    this.store.dispatch(new SelectedProductAction(product));
   }
 
   onAvaliableProduct(product: Product) {
-    // this.eventEmitterItemProductList.emit({
-    //   type: ProductActionsTypes.AVAILIABLE_PRODUCT,
-    //   payload: product,
-    // });
+    this.store.dispatch(new AvaliableSelectedProductAction(product));
   }
 
   onDeleteProduct(product: Product) {
-    // this.eventEmitterItemProductList.emit({
-    //   type: ProductActionsTypes.DELETE_PRODUCT,
-    //   payload: product,
-    // });
+    this.store.dispatch(new DeleteProductAction(product));
+    // console.log('Deleting product:', product); // Vérifiez ici que product.id est défini
+    // if (product && product.id) {
+    //   this.store.dispatch(new DeleteProductAction(product));
+    // } else {
+    //   console.error('Product ID is undefined');
+    // }
   }
 
   onUpdateProduct(product: Product) {
-    // this.eventEmitterItemProductList.emit({
-    //   type: ProductActionsTypes.UPDATE_PRODUCT,
-    //   payload: product,
-    // });
+    this.store.dispatch(new UpdateProductAction(product));
   }
 }

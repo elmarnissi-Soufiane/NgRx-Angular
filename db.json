@@ -13,30 +13,22 @@
       "name": "Smartwatch Pro",
       "price": 299.99,
       "quantity": 185,
-      "selected": true,
-      "available": false
-    },
-    {
-      "id": "8",
-      "name": "External Hard Drive",
-      "price": 79.99,
-      "quantity": 2121,
       "selected": false,
       "available": true
     },
     {
-      "id": "9",
-      "name": "4K Monitor",
-      "price": 399.99,
-      "quantity": 207898,
-      "selected": false,
+      "id": "0122",
+      "name": "soufiane",
+      "price": 1997,
+      "quantity": 27,
+      "selected": true,
       "available": false
     },
     {
-      "id": "9168",
-      "name": "dkdkl",
-      "price": 45,
-      "quantity": 6546,
+      "id": "25c3",
+      "name": "Elmarnissi soufiane",
+      "price": 0,
+      "quantity": 0,
       "selected": true,
       "available": true
     }

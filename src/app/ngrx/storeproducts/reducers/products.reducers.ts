@@ -12,6 +12,8 @@ export enum ProductStateEnum {
   LOADED = 'Loaded',
   ERROR = 'Error',
   INITIAL = 'Initial',
+  NEW = 'New',
+  EDIT = 'Edit',
 }
 
 // il faut declarer le statement car le seul qui à le droit à changer le statement
@@ -46,13 +48,16 @@ export function productReducer(
       return {
         ...state,
         dataState: ProductStateEnum.LOADED,
-        products: (<ProductsActions>action).payload,
+        products: Array.isArray((<ProductsActions>action).payload)
+          ? (<ProductsActions>action).payload
+          : [], // S'assurer que le payload est un tableau
       };
     case ProductActionsTypes.GET_ALL_PRODUCTS_ERROR:
       return {
         ...state,
         dataState: ProductStateEnum.ERROR,
         errorMessage: (<ProductsActions>action).payload,
+        products: [], // Vider les produits en cas d'erreur
       };
 
     // Get selected products
@@ -65,16 +70,19 @@ export function productReducer(
       return {
         ...state,
         dataState: ProductStateEnum.LOADED,
-        products: (<ProductsActions>action).payload,
+        products: Array.isArray((<ProductsActions>action).payload)
+          ? (<ProductsActions>action).payload
+          : [], // S'assurer que le payload est un tableau
       };
     case ProductActionsTypes.GET_SELECTED_PRODUCTS_ERROR:
       return {
         ...state,
         dataState: ProductStateEnum.ERROR,
         errorMessage: (<ProductsActions>action).payload,
+        products: [], // Vider les produits en cas d'erreur
       };
 
-    // Get available products
+    // Cas pour d'autres actions similaires (GET_AVALIABLE_PRODUCTS, SEARCH_PRODUCTS, etc.)
     case ProductActionsTypes.GET_AVALIABLE_PRODUCTS:
       return {
         ...state,
@@ -84,32 +92,16 @@ export function productReducer(
       return {
         ...state,
         dataState: ProductStateEnum.LOADED,
-        products: (<ProductsActions>action).payload,
+        products: Array.isArray((<ProductsActions>action).payload)
+          ? (<ProductsActions>action).payload
+          : [], // Assurez-vous que le payload est un tableau
       };
     case ProductActionsTypes.GET_AVALIABLE_PRODUCTS_ERROR:
       return {
         ...state,
         dataState: ProductStateEnum.ERROR,
         errorMessage: (<ProductsActions>action).payload,
-      };
-
-    // Search products
-    case ProductActionsTypes.SEARCH_PRODUCTS:
-      return {
-        ...state,
-        dataState: ProductStateEnum.LOADING,
-      };
-    case ProductActionsTypes.SEARCH_PRODUCTS_SUCCESS:
-      return {
-        ...state,
-        dataState: ProductStateEnum.LOADED,
-        products: (<ProductsActions>action).payload,
-      };
-    case ProductActionsTypes.SEARCH_PRODUCTS_ERROR:
-      return {
-        ...state,
-        dataState: ProductStateEnum.ERROR,
-        errorMessage: (<ProductsActions>action).payload,
+        products: [], // Vider les produits en cas d'erreur
       };
 
     // New product
@@ -121,60 +113,17 @@ export function productReducer(
     case ProductActionsTypes.NEW_PRODUCT_SUCCESS:
       return {
         ...state,
-        dataState: ProductStateEnum.LOADED,
-        products: [...state.products, (<ProductsActions>action).payload], // Add new product to the list
+        dataState: ProductStateEnum.NEW,
+        products: Array.isArray((<ProductsActions>action).payload)
+          ? [...state.products, ...(<ProductsActions>action).payload]
+          : state.products, // Ajouter un produit en s'assurant que c'est un tableau
       };
     case ProductActionsTypes.NEW_PRODUCT_ERROR:
       return {
         ...state,
         dataState: ProductStateEnum.ERROR,
         errorMessage: (<ProductsActions>action).payload,
-      };
-
-    // Selected product change status
-    case ProductActionsTypes.SELECTED_PRODUCT:
-      return {
-        ...state,
-        dataState: ProductStateEnum.LOADING,
-      };
-    case ProductActionsTypes.SELECTED_PRODUCT_SUCCESS:
-      return {
-        ...state,
-        dataState: ProductStateEnum.LOADED,
-        products: state.products.map((product) =>
-          product.id === (<ProductsActions>action).payload.id
-            ? { ...product, selected: true }
-            : product
-        ),
-      };
-    case ProductActionsTypes.SELECTED_PRODUCT_ERROR:
-      return {
-        ...state,
-        dataState: ProductStateEnum.ERROR,
-        errorMessage: (<ProductsActions>action).payload,
-      };
-
-    // Available product change status
-    case ProductActionsTypes.AVAILIABLE_PRODUCT:
-      return {
-        ...state,
-        dataState: ProductStateEnum.LOADING,
-      };
-    case ProductActionsTypes.AVAILIABLE_PRODUCT_SUCCESS:
-      return {
-        ...state,
-        dataState: ProductStateEnum.LOADED,
-        products: state.products.map((product) =>
-          product.id === (<ProductsActions>action).payload.id
-            ? { ...product, available: true }
-            : product
-        ),
-      };
-    case ProductActionsTypes.AVAILIABLE_PRODUCT_ERROR:
-      return {
-        ...state,
-        dataState: ProductStateEnum.ERROR,
-        errorMessage: (<ProductsActions>action).payload,
+        products: [], // Vider les produits en cas d'erreur
       };
 
     // Update product
@@ -198,6 +147,7 @@ export function productReducer(
         ...state,
         dataState: ProductStateEnum.ERROR,
         errorMessage: (<ProductsActions>action).payload,
+        products: [], // Vider les produits en cas d'erreur
       };
 
     // Delete product
@@ -211,7 +161,7 @@ export function productReducer(
         ...state,
         dataState: ProductStateEnum.LOADED,
         products: state.products.filter(
-          (product) => product.id !== (<ProductsActions>action).payload
+          (product) => product.id !== (<ProductsActions>action).payload.id
         ),
       };
     case ProductActionsTypes.DELETE_PRODUCT_ERROR:
@@ -219,8 +169,35 @@ export function productReducer(
         ...state,
         dataState: ProductStateEnum.ERROR,
         errorMessage: (<ProductsActions>action).payload,
+        products: [], // Vider les produits en cas d'erreur
       };
 
+    // Ajouter un produit
+    case ProductActionsTypes.SAVE_PRODUCT:
+      return {
+        ...state,
+        dataState: ProductStateEnum.LOADING,
+      };
+    case ProductActionsTypes.SAVE_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        dataState: ProductStateEnum.LOADED,
+        products: Array.isArray([
+          ...state.products,
+          (<ProductsActions>action).payload,
+        ])
+          ? [...state.products, (<ProductsActions>action).payload]
+          : state.products, // Ajouter le produit en s'assurant que c'est un tableau
+      };
+    case ProductActionsTypes.SAVE_PRODUCT_ERROR:
+      return {
+        ...state,
+        dataState: ProductStateEnum.ERROR,
+        errorMessage: (<ProductsActions>action).payload,
+        products: [], // Vider les produits en cas d'erreur
+      };
+
+    // Par défaut
     default:
       return { ...state };
   }

@@ -5,6 +5,7 @@ import { ProductsService } from '../../../services/products.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap, Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
+import { Product } from '../../../models/product';
 import {
   AvaliableSelectedProductActionError,
   AvaliableSelectedProductActionSuccess,
@@ -20,6 +21,8 @@ import {
   NewProductActionSuccess,
   ProductActionsTypes,
   ProductsActions,
+  SaveProductActionError,
+  SaveProductActionSuccess,
   SelectedProductActionError,
   SelectedProductActionSuccess,
   SerearchProductActionError,
@@ -100,7 +103,6 @@ export class ProductsEffectts {
     )
   );
 
-  // Selected Product
   selectedProductEffect: Observable<ProductsActions> = createEffect(() =>
     this.effectActions.pipe(
       ofType(ProductActionsTypes.SELECTED_PRODUCT),
@@ -118,12 +120,13 @@ export class ProductsEffectts {
   // Avaliabe Product
   avaliableProductEffect: Observable<ProductsActions> = createEffect(() =>
     this.effectActions.pipe(
-      ofType(ProductActionsTypes.AVAILIABLE_PRODUCT),
+      ofType(ProductActionsTypes.AVAILIABLE_PRODUCT), // Action interceptée.
       mergeMap((action: ProductsActions) =>
         this.productsService.onAvailableProduct(action.payload).pipe(
-          map((data) => new AvaliableSelectedProductActionSuccess(data)),
-          catchError((error) =>
-            of(new AvaliableSelectedProductActionError(error.message))
+          map((data) => new AvaliableSelectedProductActionSuccess(data)), // Succès.
+          catchError(
+            (error) =>
+              of(new AvaliableSelectedProductActionError(error.message)) // Échec.
           )
         )
       )
@@ -134,35 +137,46 @@ export class ProductsEffectts {
   newProductEffect: Observable<ProductsActions> = createEffect(() =>
     this.effectActions.pipe(
       ofType(ProductActionsTypes.NEW_PRODUCT),
+      map((action: ProductsActions) => {
+        return new NewProductActionSuccess({});
+      })
+    )
+  );
+
+  // save product
+  saveProductsEffect: Observable<ProductsActions> = createEffect(() =>
+    this.effectActions.pipe(
+      ofType(ProductActionsTypes.SAVE_PRODUCT),
       mergeMap((action: ProductsActions) =>
         this.productsService.saveProduct(action.payload).pipe(
-          map((data) => new NewProductActionSuccess(data)),
-          catchError((error) => of(new NewProductActionError(error.message)))
+          map((product) => new SaveProductActionSuccess(product)),
+          catchError((error) => of(new SaveProductActionError(error.message)))
         )
       )
     )
   );
 
   // Update product
-  updateProductEffect: Observable<ProductsActions> = createEffect(() =>
-    this.effectActions.pipe(
-      ofType(ProductActionsTypes.UPDATE_PRODUCT),
-      mergeMap((action: ProductsActions) =>
-        this.productsService.updateProduct(action.payload).pipe(
-          map((data) => new UpdateProductActionSuccess(data)),
-          catchError((error) => of(new UpdateProductActionError(error.message)))
-        )
-      )
-    )
-  );
+  // updateProductEffect: Observable<ProductsActions> = createEffect(() =>
+  //   this.effectActions.pipe(
+  //     ofType(ProductActionsTypes.UPDATE_PRODUCT),
+  //     mergeMap((action: ProductsActions) =>
+  //       this.productsService.updateProduct(action.payload).pipe(
+  //         map((data) => new UpdateProductActionSuccess(data)),
+  //         catchError((error) => of(new UpdateProductActionError(error.message)))
+  //       )
+  //     )
+  //   )
+  // );
 
-  // Delete Prodcut
+  //Delete Prodcut
   deleteProductsEffect: Observable<ProductsActions> = createEffect(() =>
     this.effectActions.pipe(
       ofType(ProductActionsTypes.DELETE_PRODUCT),
       mergeMap((action: ProductsActions) =>
         this.productsService.deleteProdcuts(action.payload).pipe(
-          map((data) => new DeleteProductActionSuccess(data)),
+          // Passez l'objet produit complet
+          map(() => new DeleteProductActionSuccess(action.payload)),
           catchError((error) => of(new DeleteProductActionError(error.message)))
         )
       )
