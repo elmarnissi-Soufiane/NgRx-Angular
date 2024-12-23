@@ -1,38 +1,95 @@
 <nav class="navbar navbar-expand-sm bg-light navbar-light">
-    <ul class="navbar navbar-nav">
-        <li>
-            <button (click)="onGetAllProducts()" class="btn btn-sm btn-outline-info m-3">
+  <ul class="navbar navbar-nav">
+    <li>
+      <button
+        [ngClass]="
+          state?.currentAction?.type ==
+          ProductActionsTypes.GET_ALL_PRODUCTS_SUCCESS
+            ? 'btn-danger'
+            : 'btn-outline-info'
+        "
+        (click)="onGetAllProducts()"
+        class="btn btn-sm m-3"
+      >
         All
       </button>
-        </li>
-        <li>
-            <button (click)="onGetSelectedProduct()" class="btn btn-sm btn-outline-info m-3">
+    </li>
+    <li>
+      <button
+        (click)="onGetSelectedProduct()"
+        [ngClass]="
+          state?.currentAction?.type ==
+          ProductActionsTypes.GET_SELECTED_PRODUCTS_SUCCESS
+            ? 'btn-danger'
+            : 'btn-outline-info'
+        "
+        class="btn btn-sm m-3"
+      >
         Selected
       </button>
-        </li>
-        <li>
-            <button (click)="onGetAvaiableProduct()" class="btn btn-sm btn-outline-info m-3">
+    </li>
+    <li>
+      <button
+        (click)="onGetAvaiableProduct()"
+        [ngClass]="
+          state?.currentAction?.type ==
+          ProductActionsTypes.GET_AVALIABLE_PRODUCTS_SUCCESS
+            ? 'btn-danger'
+            : 'btn-outline-info'
+        "
+        class="btn btn-sm m-3"
+      >
         Available
       </button>
-        </li>
-        <li>
-            <button (click)="onNewProduct()" class="btn btn-sm btn-outline-info m-3">
+    </li>
+    <li>
+      <button
+        (click)="onNewProduct()"
+        [ngClass]="
+          state?.currentAction?.type == ProductActionsTypes.NEW_PRODUCT_SUCCESS
+            ? 'btn-danger'
+            : 'btn-outline-info'
+        "
+        class="btn btn-sm m-3"
+      >
         New
       </button>
-        </li>
-    </ul>
-    <ul class="navbar navbar-nav ml-auto">
-        <li class="nav-item">
-            <form class="form-inline" #formSearch="ngForm" (ngSubmit)="onSerach(formSearch.value)">
-                <div class="input-group">
-                    <input ngModel name="keyword" type="text" class="form-control" placeholder="Search products..." aria-label="Search products" aria-describedby="search-button" />
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-info" type="submit" id="search-button">
+    </li>
+  </ul>
+  <ul class="navbar navbar-nav ml-auto">
+    <li class="nav-item">
+      <form
+        class="form-inline"
+        #formSearch="ngForm"
+        (ngSubmit)="onSerach(formSearch.value)"
+      >
+        <div class="input-group">
+          <input
+            ngModel
+            name="keyword"
+            type="text"
+            class="form-control"
+            placeholder="Search products..."
+            aria-label="Search products"
+            aria-describedby="search-button"
+          />
+          <div class="input-group-append">
+            <button
+              [ngClass]="
+                state?.currentAction?.type ==
+                ProductActionsTypes.SEARCH_PRODUCTS_SUCCESS
+                  ? 'btn-danger'
+                  : 'btn-outline-info'
+              "
+              class="btn"
+              type="submit"
+              id="search-button"
+            >
               <span class="fa fa-search"></span>
             </button>
-                    </div>
-                </div>
-            </form>
-        </li>
-    </ul>
+          </div>
+        </div>
+      </form>
+    </li>
+  </ul>
 </nav>

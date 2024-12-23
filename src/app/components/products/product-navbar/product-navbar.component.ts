@@ -10,6 +10,11 @@ import {
   SerearchProductAction,
 } from '../../../ngrx/storeproducts/actions/prodcuts.actions';
 import { Router } from '@angular/router';
+import { ProductActionsTypes } from '../../../ngrx/storeproducts/actions/prodcuts.actions';
+import {
+  ProductsState,
+  ProductStateEnum,
+} from '../../../ngrx/storeproducts/reducers/products.reducers';
 
 @Component({
   selector: 'app-product-navbar',
@@ -19,9 +24,17 @@ import { Router } from '@angular/router';
   styleUrl: './product-navbar.component.css',
 })
 export class ProductNavbarComponent implements OnInit {
+  // pour faire une action sur les evenet diff
+  state: ProductsState | null = null;
+  readonly ProductActionsTypes = ProductActionsTypes;
+
   constructor(private store: Store<any>, private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.store.subscribe((state) => {
+      this.state = state.catalogueState;
+    });
+  }
 
   onGetAllProducts() {
     //damande de l'action
