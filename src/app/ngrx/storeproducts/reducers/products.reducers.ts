@@ -197,6 +197,26 @@ export function productReducer(
         products: [], // Vider les produits en cas d'erreur
       };
 
+    // Search products
+    case ProductActionsTypes.SEARCH_PRODUCTS:
+      return {
+        ...state,
+        dataState: ProductStateEnum.LOADING,
+      };
+    case ProductActionsTypes.SEARCH_PRODUCTS_SUCCESS:
+      return {
+        ...state,
+        dataState: ProductStateEnum.LOADED,
+        products: (<ProductsActions>action).payload,
+      };
+    case ProductActionsTypes.SEARCH_PRODUCTS_ERROR:
+      return {
+        ...state,
+        dataState: ProductStateEnum.ERROR,
+        errorMessage: (<ProductsActions>action).payload,
+        products: [], // Vider les produits en cas d'erreur
+      };
+
     // Par défaut
     default:
       return { ...state };

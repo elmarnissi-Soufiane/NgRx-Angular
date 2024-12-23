@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-nav-bar',
@@ -8,4 +8,16 @@ import { RouterLink } from '@angular/router';
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.css',
 })
-export class NavBarComponent {}
+export class NavBarComponent implements OnInit {
+  constructor(private router: Router) {}
+
+  ngOnInit(): void {}
+
+  navigateHome() {
+    this.router.navigateByUrl('/home');
+  }
+
+  navigateProduct() {
+    this.router.navigateByUrl('/products');
+  }
+}

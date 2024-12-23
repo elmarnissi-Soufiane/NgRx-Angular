@@ -1,18 +1,27 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand" routerLink="/">Product</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/">Product</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li>
-                    <a class="nav-link" routerLink="/home" routerLinkActive="active">Home</a
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li>
+          <a class="nav-link" (click)="navigateHome()" routerLinkActive="active"
+            >Home</a
           >
         </li>
         <li>
-          <a class="nav-link" routerLink="/products" routerLinkActive="active"
+          <a
+            class="nav-link"
+            (click)="navigateProduct()"
+            routerLinkActive="active"
             >Products</a
           >
         </li>

@@ -27,15 +27,9 @@
   </ng-container>
 </div>
 
-<!-- Formulaire uniquement lorsque l'état est NEW et que productFormGroup est initialisé -->
-<ng-container
-  *ngIf="productFormGroup && state?.dataState === ProductStateEnum.NEW"
->
-  <form
-    [formGroup]="productFormGroup"
-    class="border p-4 rounded shadow"
-    (ngSubmit)="onSaveProduct()"
-  >
+<div class="container mt-4" *ngIf="productFormGroup">
+  <h2 class="text-center mb-4">Add or Edit Product</h2>
+  <form [formGroup]="productFormGroup" class="border p-4 rounded shadow">
     <div class="mb-3">
       <label for="name" class="form-label">Product Name</label>
       <input
@@ -117,6 +111,12 @@
       <label for="available" class="form-check-label">Available</label>
     </div>
 
-    <button type="submit" class="btn btn-primary w-100">Submit</button>
+    <button
+      type="submit"
+      class="btn btn-primary w-100"
+      (click)="onSaveProduct()"
+    >
+      Submit
+    </button>
   </form>
-</ng-container>
+</div>

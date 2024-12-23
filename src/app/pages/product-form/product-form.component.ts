@@ -60,7 +60,8 @@ export class ProductFormComponent implements OnInit {
 
   // ajouter
   onSaveProduct() {
-    //this.submitted = true;
+    this.submitted = true;
+    if (this.productFormGroup?.invalid) return;
     this.store.dispatch(new SaveProductAction(this.productFormGroup?.value));
   }
 }
