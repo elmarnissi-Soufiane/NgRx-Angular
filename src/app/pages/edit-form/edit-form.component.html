@@ -1,144 +1,94 @@
 <div class="container mt-4">
-  <!-- Vérification si le FormGroup est initialisé -->
-  <ng-container *ngIf="productFormGroup">
-    <ng-container *ngIf="state as data">
-      <!-- Affichage pendant le chargement -->
-      <ng-container *ngIf="data.dataState === ProductStateEnum.LOADING">
-        <div>Loading...</div>
-      </ng-container>
+    <!-- Vérification si le FormGroup est initialisé -->
+    <ng-container *ngIf="productFormGroup">
+        <ng-container *ngIf="state as data">
+            <!-- Affichage pendant le chargement -->
+            <ng-container *ngIf="data.dataState === ProductStateEnum.LOADING">
+                <div>Loading...</div>
+            </ng-container>
 
-      <!-- Affichage après le chargement -->
-      <ng-container *ngIf="data.dataState === ProductStateEnum.LOADED">
-        <ng-container *ngIf="formBuild">
-          <div class="alert alert-success container p-3 m-3">
-            <span>Product Updated Successfully</span>
-            <button class="btn btn-success ml-3" (click)="okUpdateProduct()">
+            <!-- Affichage après le chargement -->
+            <ng-container *ngIf="data.dataState === ProductStateEnum.LOADED">
+                <ng-container *ngIf="formBuild">
+                    <div class="alert alert-success container p-3 m-3">
+                        <span>Product Updated Successfully</span>
+                        <button class="btn btn-success ml-3" (click)="okUpdateProduct()">
               Products
             </button>
-          </div>
-        </ng-container>
-      </ng-container>
+                    </div>
+                </ng-container>
+            </ng-container>
 
-      <!-- Affichage en cas d'erreur -->
-      <ng-container *ngIf="data.dataState === ProductStateEnum.ERROR">
-        <div class="alert alert-danger container p-3 m-3">
-          <span>{{ state.errorMessage }}</span>
-        </div>
-      </ng-container>
+            <!-- Affichage en cas d'erreur -->
+            <ng-container *ngIf="data.dataState === ProductStateEnum.ERROR">
+                <div class="alert alert-danger container p-3 m-3">
+                    <span>{{ state.errorMessage }}</span>
+                </div>
+            </ng-container>
+        </ng-container>
     </ng-container>
-  </ng-container>
 </div>
 
 <ng-container *ngIf="state as data">
-  <ng-container *ngIf="data.dataState === ProductStateEnum.LOADED">
-    <div class="container mt-4" *ngIf="productFormGroup">
-      <h2 class="text-center mb-4">Edit Product</h2>
-      <ng-container>
-        <form [formGroup]="productFormGroup" class="border p-4 rounded shadow">
-          <!-- Champ caché pour l'ID -->
-          <div class="mb-3">
-            <label for="name" class="form-label">Product ID</label>
-            <input
-              type="text"
-              class="form-control"
-              formControlName="id"
-              id="id"
-              type="hidden"
-            />
-          </div>
+    <ng-container *ngIf="data.dataState === ProductStateEnum.LOADED">
+        <div class="container mt-4" *ngIf="productFormGroup">
+            <h2 class="text-center mb-4">Edit Product</h2>
+            <ng-container>
+                <form [formGroup]="productFormGroup" class="border p-4 rounded shadow">
+                    <!-- Champ caché pour l'ID -->
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Product ID</label>
+                        <input type="text" class="form-control" formControlName="id" id="id" type="hidden" />
+                    </div>
 
-          <div class="mb-3">
-            <label for="name" class="form-label">Product Name</label>
-            <input
-              type="text"
-              id="name"
-              class="form-control"
-              formControlName="name"
-              placeholder="Enter product name"
-              [ngClass]="{
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Product Name</label>
+                        <input type="text" id="name" class="form-control" formControlName="name" placeholder="Enter product name" [ngClass]="{
                 'is-invalid':
                   submitted && productFormGroup.controls['name'].errors
-              }"
-            />
-            <div
-              *ngIf="submitted && productFormGroup.controls['name'].errors"
-              class="invalid-feedback"
-            >
-              Name is required
-            </div>
-          </div>
+              }" />
+                        <div *ngIf="submitted && productFormGroup.controls['name'].errors" class="invalid-feedback">
+                            Name is required
+                        </div>
+                    </div>
 
-          <div class="mb-3">
-            <label for="price" class="form-label">Price ($)</label>
-            <input
-              type="number"
-              id="price"
-              class="form-control"
-              formControlName="price"
-              placeholder="Enter product price"
-              [ngClass]="{
+                    <div class="mb-3">
+                        <label for="price" class="form-label">Price ($)</label>
+                        <input type="number" id="price" class="form-control" formControlName="price" placeholder="Enter product price" [ngClass]="{
                 'is-invalid':
                   submitted && productFormGroup.controls['price'].errors
-              }"
-            />
-            <div
-              *ngIf="submitted && productFormGroup.controls['price'].errors"
-              class="invalid-feedback"
-            >
-              Price is required
-            </div>
-          </div>
+              }" />
+                        <div *ngIf="submitted && productFormGroup.controls['price'].errors" class="invalid-feedback">
+                            Price is required
+                        </div>
+                    </div>
 
-          <div class="mb-3">
-            <label for="quantity" class="form-label">Quantity</label>
-            <input
-              type="number"
-              id="quantity"
-              class="form-control"
-              formControlName="quantity"
-              placeholder="Enter product quantity"
-              [ngClass]="{
+                    <div class="mb-3">
+                        <label for="quantity" class="form-label">Quantity</label>
+                        <input type="number" id="quantity" class="form-control" formControlName="quantity" placeholder="Enter product quantity" [ngClass]="{
                 'is-invalid':
                   submitted && productFormGroup.controls['quantity'].errors
-              }"
-            />
-            <div
-              *ngIf="submitted && productFormGroup.controls['quantity'].errors"
-              class="invalid-feedback"
-            >
-              Quantity is required
-            </div>
-          </div>
+              }" />
+                        <div *ngIf="submitted && productFormGroup.controls['quantity'].errors" class="invalid-feedback">
+                            Quantity is required
+                        </div>
+                    </div>
 
-          <div class="form-check form-switch mb-3">
-            <input
-              type="checkbox"
-              id="selected"
-              class="form-check-input"
-              formControlName="selected"
-            />
-            <label for="selected" class="form-check-label">Selected</label>
-          </div>
+                    <div class="form-check form-switch mb-3">
+                        <input type="checkbox" id="selected" class="form-check-input" formControlName="selected" />
+                        <label for="selected" class="form-check-label">Selected</label>
+                    </div>
 
-          <div class="form-check form-switch mb-3">
-            <input
-              type="checkbox"
-              id="available"
-              class="form-check-input"
-              formControlName="available"
-            />
-            <label for="available" class="form-check-label">Available</label>
-          </div>
+                    <div class="form-check form-switch mb-3">
+                        <input type="checkbox" id="available" class="form-check-input" formControlName="available" />
+                        <label for="available" class="form-check-label">Available</label>
+                    </div>
 
-          <button
-            type="submit"
-            class="btn btn-primary w-100"
-            (click)="onUpdateProduct()"
-          >
+                    <button type="submit" class="btn btn-primary w-100" (click)="onUpdateProduct()">
             Submit
           </button>
-        </form>
-      </ng-container>
-    </div>
-  </ng-container>
+                </form>
+            </ng-container>
+        </div>
+    </ng-container>
 </ng-container>

@@ -5,7 +5,7 @@
       "name": "Smartphone X",
       "price": 8001,
       "quantity": 25,
-      "selected": true,
+      "selected": false,
       "available": false
     },
     {
@@ -14,7 +14,7 @@
       "price": 299.99,
       "quantity": 185,
       "selected": false,
-      "available": true
+      "available": false
     },
     {
       "id": "25c3",
@@ -22,15 +22,15 @@
       "price": 9,
       "quantity": 546,
       "selected": false,
-      "available": true
+      "available": false
     },
     {
       "id": "e91d",
       "name": "PC 13",
       "price": 1212,
       "quantity": 1111,
-      "selected": true,
-      "available": true
+      "selected": false,
+      "available": false
     }
   ]
 }

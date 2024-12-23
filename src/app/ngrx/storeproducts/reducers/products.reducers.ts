@@ -100,7 +100,7 @@ export function productReducer(
         currentAction: <ProductsActions>action, // Vider les produits en cas d'erreur
       };
 
-    // Cas pour d'autres actions similaires (GET_AVALIABLE_PRODUCTS, SEARCH_PRODUCTS, etc.)
+    // GET_AVALIABLE_PRODUCTS
     case ProductActionsTypes.GET_AVALIABLE_PRODUCTS:
       return {
         ...state,
@@ -272,6 +272,60 @@ export function productReducer(
         dataState: ProductStateEnum.ERROR,
         errorMessage: (<ProductsActions>action).payload,
         products: [], // Vider les produits en cas d'erreur
+        currentAction: <ProductsActions>action,
+      };
+
+    case ProductActionsTypes.SELECTED_PRODUCT:
+      return {
+        ...state,
+        dataState: ProductStateEnum.LOADING, // Indique le chargement.
+        currentAction: <ProductsActions>action,
+      };
+
+    case ProductActionsTypes.SELECTED_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        dataState: ProductStateEnum.LOADED, // Indique que l'action a réussi.
+        products: state.products.map((product) =>
+          product.id === (<ProductsActions>action).payload.id
+            ? (<ProductsActions>action).payload // Met à jour le produit sélectionné.
+            : product
+        ),
+        currentAction: <ProductsActions>action,
+      };
+
+    case ProductActionsTypes.SELECTED_PRODUCT_ERROR:
+      return {
+        ...state,
+        dataState: ProductStateEnum.ERROR, // Indique une erreur.
+        errorMessage: (<ProductsActions>action).payload, // Ajoute un message d'erreur.
+        currentAction: <ProductsActions>action,
+      };
+
+    case ProductActionsTypes.AVAILIABLE_PRODUCT:
+      return {
+        ...state,
+        dataState: ProductStateEnum.LOADING, // Indique le chargement.
+        currentAction: <ProductsActions>action,
+      };
+
+    case ProductActionsTypes.AVAILIABLE_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        dataState: ProductStateEnum.LOADED, // Indique que l'action a réussi.
+        products: state.products.map((product) =>
+          product.id === (<ProductsActions>action).payload.id
+            ? (<ProductsActions>action).payload // Met à jour le produit disponible.
+            : product
+        ),
+        currentAction: <ProductsActions>action,
+      };
+
+    case ProductActionsTypes.AVAILIABLE_PRODUCT_ERROR:
+      return {
+        ...state,
+        dataState: ProductStateEnum.ERROR, // Indique une erreur.
+        errorMessage: (<ProductsActions>action).payload, // Ajoute un message d'erreur.
         currentAction: <ProductsActions>action,
       };
 

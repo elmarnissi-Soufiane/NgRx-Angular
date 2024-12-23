@@ -106,6 +106,7 @@ export class ProductsEffectts {
     )
   );
 
+  // Selected
   selectedProductEffect: Observable<ProductsActions> = createEffect(() =>
     this.effectActions.pipe(
       ofType(ProductActionsTypes.SELECTED_PRODUCT),
