@@ -8,6 +8,7 @@ import {
   SelectedProductAction,
   UpdateProductAction,
 } from '../../../ngrx/storeproducts/actions/prodcuts.actions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-item',
@@ -20,7 +21,7 @@ export class ProductItemComponent implements OnInit {
   // Product
   @Input() product: Product | null = null;
 
-  constructor(private store: Store) {}
+  constructor(private store: Store, private router: Router) {}
   ngOnInit(): void {}
 
   onSelectProduct(product: Product) {
@@ -42,6 +43,7 @@ export class ProductItemComponent implements OnInit {
   }
 
   onUpdateProduct(product: Product) {
-    this.store.dispatch(new UpdateProductAction(product));
+    // switch vers ig url to get prodct
+    this.router.navigateByUrl('/editProduct/' + product.id);
   }
 }

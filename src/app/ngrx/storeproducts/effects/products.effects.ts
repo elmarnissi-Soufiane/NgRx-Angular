@@ -4,9 +4,12 @@ import { Injectable } from '@angular/core';
 import { ProductsService } from '../../../services/products.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap, Observable, of } from 'rxjs';
-import { Action } from '@ngrx/store';
-import { Product } from '../../../models/product';
-import { SerearchProductActionSuccess } from '../actions/prodcuts.actions';
+
+import {
+  EditProductActionError,
+  EditProductActionSuccess,
+  SerearchProductActionSuccess,
+} from '../actions/prodcuts.actions';
 import {
   AvaliableSelectedProductActionError,
   AvaliableSelectedProductActionSuccess,
@@ -156,18 +159,33 @@ export class ProductsEffectts {
     )
   );
 
-  // Update product
-  // updateProductEffect: Observable<ProductsActions> = createEffect(() =>
-  //   this.effectActions.pipe(
-  //     ofType(ProductActionsTypes.UPDATE_PRODUCT),
-  //     mergeMap((action: ProductsActions) =>
-  //       this.productsService.updateProduct(action.payload).pipe(
-  //         map((data) => new UpdateProductActionSuccess(data)),
-  //         catchError((error) => of(new UpdateProductActionError(error.message)))
-  //       )
-  //     )
-  //   )
-  // );
+  // Edit Product
+  editProductEffect: Observable<ProductsActions> = createEffect(() =>
+    this.effectActions.pipe(
+      ofType(ProductActionsTypes.EDIT_PRODUCT),
+      mergeMap((action: ProductsActions) => {
+        return this.productsService.getProductById(action.payload).pipe(
+          map((data) => {
+            return new EditProductActionSuccess(data);
+          }),
+          catchError((error) => of(new EditProductActionError(error.message)))
+        );
+      })
+    )
+  );
+
+  //Update product
+  updateProductEffect: Observable<ProductsActions> = createEffect(() =>
+    this.effectActions.pipe(
+      ofType(ProductActionsTypes.UPDATE_PRODUCT),
+      mergeMap((action: ProductsActions) =>
+        this.productsService.updateProduct(action.payload).pipe(
+          map((data) => new UpdateProductActionSuccess(data)),
+          catchError((error) => of(new UpdateProductActionError(error.message)))
+        )
+      )
+    )
+  );
 
   //Delete Prodcut
   deleteProductsEffect: Observable<ProductsActions> = createEffect(() =>

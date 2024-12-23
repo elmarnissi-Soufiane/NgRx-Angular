@@ -34,10 +34,6 @@ export enum ProductActionsTypes {
   AVAILIABLE_PRODUCT_SUCCESS = '[Products] Avaliable Selected successfully',
   AVAILIABLE_PRODUCT_ERROR = '[Products] Avaliable Selected Error',
 
-  UPDATE_PRODUCT = '[Product] Update Product',
-  UPDATE_PRODUCT_SUCCESS = '[Products] Update Product successfully',
-  UPDATE_PRODUCT_ERROR = '[Products] Update Product Error',
-
   DELETE_PRODUCT = '[Product] Delete Product',
   DELETE_PRODUCT_SUCCESS = '[Product] Delete Product successfully',
   DELETE_PRODUCT_ERROR = '[Product] Delete Product Error',
@@ -45,6 +41,15 @@ export enum ProductActionsTypes {
   SAVE_PRODUCT = '[Product] Save Product',
   SAVE_PRODUCT_SUCCESS = '[Product] Save Product successfully',
   SAVE_PRODUCT_ERROR = '[Product] Save Product Error',
+
+  //// Edit
+  EDIT_PRODUCT = '[Product] EDIT Product',
+  EDIT_PRODUCT_SUCCESS = '[Product] Edit product successfully',
+  EDIT_PRODUCT_ERROR = '[Product] Edit product Error',
+
+  UPDATE_PRODUCT = '[Product] Update Product',
+  UPDATE_PRODUCT_SUCCESS = '[Products] Update Product successfully',
+  UPDATE_PRODUCT_ERROR = '[Products] Update Product Error',
 }
 
 // For Get Products function
@@ -224,6 +229,25 @@ export class SaveProductActionError implements Action {
   constructor(public payload: string) {}
 }
 
+/////////
+// For EDIT Products
+
+// get By ID
+export class EditProductAction implements Action {
+  type: ProductActionsTypes = ProductActionsTypes.EDIT_PRODUCT;
+  constructor(public payload: number) {}
+}
+
+export class EditProductActionSuccess implements Action {
+  type: ProductActionsTypes = ProductActionsTypes.EDIT_PRODUCT_SUCCESS;
+  constructor(public payload: Product) {}
+}
+
+export class EditProductActionError implements Action {
+  type: ProductActionsTypes = ProductActionsTypes.EDIT_PRODUCT_ERROR;
+  constructor(public payload: string) {}
+}
+
 // Pour utiliser ces types
 export type ProductsActions =
   | GetAllProductsAction
@@ -261,6 +285,11 @@ export type ProductsActions =
   | DeleteProductAction
   | DeleteProductActionSuccess
   | DeleteProductActionError
+  // Save Product
   | SaveProductAction
   | SaveProductActionSuccess
-  | SaveProductActionError;
+  | SaveProductActionError
+  // Edit Product
+  | EditProductAction
+  | EditProductActionSuccess
+  | EditProductActionError;

@@ -3,9 +3,9 @@
     {
       "id": "1",
       "name": "Smartphone X",
-      "price": 699.99,
+      "price": 8001,
       "quantity": 25,
-      "selected": false,
+      "selected": true,
       "available": false
     },
     {
@@ -17,27 +17,19 @@
       "available": true
     },
     {
-      "id": "0122",
-      "name": "soufiane",
-      "price": 1997,
-      "quantity": 27,
-      "selected": true,
-      "available": false
-    },
-    {
       "id": "25c3",
       "name": "Elmarnissi soufiane",
-      "price": 0,
-      "quantity": 0,
-      "selected": true,
+      "price": 9,
+      "quantity": 546,
+      "selected": false,
       "available": true
     },
     {
       "id": "e91d",
-      "name": "ddd",
-      "price": 48,
-      "quantity": 787,
-      "selected": false,
+      "name": "PC 13",
+      "price": 1212,
+      "quantity": 1111,
+      "selected": true,
       "available": true
     }
   ]

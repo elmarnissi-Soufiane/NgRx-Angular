@@ -53,7 +53,7 @@ export class ProductsService {
   }
 
   // edit
-  getProdutById(id: number): Observable<Product> {
+  getProductById(id: number): Observable<Product> {
     let host = 'http://localhost:3000';
     return this.http.get<Product>(host + '/products/' + id);
   }
